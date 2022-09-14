@@ -1,7 +1,9 @@
 import csv
 import json
 import pandas as pd
+import calendar
 from constants import *
+import datetime
 
 # Get arr of add and value
 # One arr for key and one arr for value
@@ -61,7 +63,12 @@ def sol(path):
    templateRow=[""]*NUM_OF_COL # use for errors file
    dataErrors = []
    print(templateObjectEmail)
-
+   today = datetime.datetime.now()
+   DAY = str(today.day)
+   MONTH = calendar.month_abbr[today.month]
+   YEAR = str(today.year)
+   todayStr = DAY + ' ' + MONTH + ' ' + YEAR 
+   
    for i in range(numOfRecord):
       email = df[header[EMAIL]][i]
       if len(email) > 0 and EMAIL_POST_FIX in email:
@@ -77,14 +84,13 @@ def sol(path):
                   templateObjectEmail[arrOfReplaceProperties[j]].replace(replaceInStr, valueReplace)
 
          for j in range(len(arrOfSpecReplaceProperties)):
-            valueReplace = "31 Dec 2000"
             replaceInStr = arrOfSpecReplaceInStr[j]
             templateObjectEmail[arrOfSpecReplaceProperties[j]] = \
-               templateObjectEmail[arrOfSpecReplaceProperties[j]].replace(replaceInStr, valueReplace)
+               templateObjectEmail[arrOfSpecReplaceProperties[j]].replace(replaceInStr, todayStr)
          
          with open(JSON_FOLDER_PATH + '\\' + df[header[EMAIL]][i] + '.json', 'w', encoding='UTF8', newline='') as result:
             result.write(json.dumps(templateObjectEmail))
-            
+
       else:
          templateRow[TITLE] = df[header[TITLE]][i]
          templateRow[FIRST_NAME] = df[header[FIRST_NAME]][i]
