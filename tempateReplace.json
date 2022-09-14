@@ -1,0 +1,19 @@
+{
+   "add": {
+      "to": {
+         "col": "EMAIL"
+      }
+   },
+   "replace": {
+      "properties": "body",
+      "prefix": "{{",
+      "col": ["TITLE", "FIRST_NAME", "LAST_NAME"],
+      "postfix": "}}"
+   }, 
+   "specific_replace": {
+      "properties": "body",
+      "prefix": "{{",
+      "value": "TODAY",
+      "postfix": "}}"
+   }
+}
