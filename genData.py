@@ -1,24 +1,9 @@
 import csv
 import random
 import string
-
+from constants import *
 # Constant definition
-DATA_FILE_PATH = 'data.csv'
-TITLE=0
-FIRST_NAME=1
-LAST_NAME=2
-EMAIL=3
-NUM_OF_COL=4
-TITLE_LENGTH_MIN=5
-TITLE_LENGTH_MAX=10
-FIRST_NAME_MIN=5
-FIRST_NAME_MAX=10
-LAST_NAME_MIN=5
-LAST_NAME_MAX=10
-EMAIL_ADDRESS_MIN=6
-EMAIL_ADDRESS_MAX=10
-EMAIL_POST_FIX='@example.com'
-HEADER = ['TITLE', 'FIRST_NAME', 'LAST_NAME', 'EMAIL']
+
 
 def randStr(chars = string.ascii_uppercase + string.digits, N=10):
 	return ''.join(random.choice(chars) for _ in range(N))
