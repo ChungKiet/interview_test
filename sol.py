@@ -5,14 +5,7 @@ import calendar
 from constants import *
 import datetime
 
-# Get arr of add and value
-# One arr for key and one arr for value
-
-CSV_PATH='data.csv'
-JSON_FOLDER_PATH='jsonFolder'
-
 def sol(path):
-   # TODO
    # read the template replace
    emailJSONFile = open(TEMPLATE_REPLACE_PATH)
    templateEmail = json.load(emailJSONFile)
@@ -20,6 +13,7 @@ def sol(path):
    arrOfReplaceValue= templateEmail[REPLACE]
    arrOfSpecificReplaceValue = templateEmail[SPECIFIC_REPLACE]
 
+   # Create the array of properties which will be add into the JSON (Exp: 'to')
    arrOfAddProperties = []
    arrOfAddCol = []
    for keyValueObject in arrOfAddValue:
@@ -27,6 +21,7 @@ def sol(path):
          arrOfAddProperties.append(k)
          arrOfAddCol.append(keyValueObject[k])
 
+   # Create the array of properties which will be replace by field in CSV file
    arrOfReplaceProperties = []
    arrOfReplaceInStr = []
    arrOfReplaceCol = []
@@ -39,7 +34,7 @@ def sol(path):
          replaceValue.append(keyValueObject[PREFIX] + col + keyValueObject[POSTFIX])
       arrOfReplaceInStr.append(replaceValue)
 
-   # specific replace no col
+   # Create the array of properties which will be replace by the specific way
    arrOfSpecReplaceProperties = []
    arrOfSpecReplaceCol = []
    arrOfSpecReplaceInStr = []
@@ -48,11 +43,7 @@ def sol(path):
       arrOfSpecReplaceCol.append(keyValueObject[VALUE])
       arrOfSpecReplaceInStr.append(keyValueObject[PREFIX] + keyValueObject[VALUE] + keyValueObject[POSTFIX])
 
-   # read the CSV and get the column name then replace follow above template
-   fileResult =  open(FILE_RESULT_PATH, 'w', encoding='UTF8', newline='')
-   fileError = open(FILE_ERROR_PATH, 'w', encoding='UTF8', newline='')
-
-   # test by read and print csv file
+   # Read data from CSV file
    df = pd.read_csv('data.csv')
 
    header = [h for h in df]
@@ -62,13 +53,15 @@ def sol(path):
    templateObjectEmail = json.load(templateJSONFile)
    templateRow=[""]*NUM_OF_COL # use for errors file
    dataErrors = []
-   print(templateObjectEmail)
+
+   # Get today and transfer to string
    today = datetime.datetime.now()
    DAY = str(today.day)
    MONTH = calendar.month_abbr[today.month]
    YEAR = str(today.year)
    todayStr = DAY + ' ' + MONTH + ' ' + YEAR 
    
+   # For each record check the email then replace or add with the above arrays
    for i in range(numOfRecord):
       email = df[header[EMAIL]][i]
       if len(email) > 0 and EMAIL_POST_FIX in email:
@@ -92,6 +85,7 @@ def sol(path):
             result.write(json.dumps(templateObjectEmail))
 
       else:
+         # Append the records which miss the email field
          templateRow[TITLE] = df[header[TITLE]][i]
          templateRow[FIRST_NAME] = df[header[FIRST_NAME]][i]
          templateRow[LAST_NAME] = df[header[LAST_NAME]][i]
@@ -107,24 +101,6 @@ def sol(path):
 
       # write multiple rows
       writer.writerows(dataErrors)
-         # write into error file
-   # call for 
-   # then for add
-   # for replace
-   # for spec replace
-   # insert into object
-
-   # write result
-   # add into error and continue if there are no email
-
-   # read all rows 
-   # replace each row with the JSON template then insert into array objects
-
-   # add the data into template json by create a array of objects
-
-   # write the array of objects into the JSON
-
-   return
 
 sol(CSV_PATH)
 
@@ -133,10 +109,3 @@ sol(CSV_PATH)
    Think about the case REST API and embedding the EMAIL service
    Create a constants file
 """
-
-# import calendar
-
-# for month_idx in range(1, 13):
-#     print (calendar.month_name[month_idx])
-#     print (calendar.month_abbr[month_idx])
-#     print ("")
