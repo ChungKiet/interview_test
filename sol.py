@@ -7,6 +7,7 @@ from constants import *
 # One arr for key and one arr for value
 
 CSV_PATH='data.csv'
+JSON_FOLDER_PATH='jsonFolder'
 
 def sol(path):
    # TODO
@@ -53,18 +54,19 @@ def sol(path):
    df = pd.read_csv('data.csv')
 
    header = [h for h in df]
-   numOfRecord = len(df[TITLE])
+   numOfRecord = len(df[header[TITLE]])
 
    templateJSONFile = open(TEMPLATE_JSON_PATH)
    templateObjectEmail = json.load(templateJSONFile)
    templateRow=[""]*NUM_OF_COL # use for errors file
    dataErrors = []
+   print(templateObjectEmail)
 
    for i in range(numOfRecord):
       email = df[header[EMAIL]][i]
       if len(email) > 0 and EMAIL_POST_FIX in email:
          for j in range(len(arrOfAddProperties)):
-            templateObjectEmail[arrOfAddProperties[j]] = df[arrOfAddValue[j]][i]
+            templateObjectEmail.update({arrOfAddProperties[j]: df[arrOfAddCol[j]][i]})
 
          for j in range(len(arrOfReplaceProperties)):
             for k in range(len(arrOfReplaceInStr[j])):
@@ -79,7 +81,10 @@ def sol(path):
             replaceInStr = arrOfSpecReplaceInStr[j]
             templateObjectEmail[arrOfSpecReplaceProperties[j]] = \
                templateObjectEmail[arrOfSpecReplaceProperties[j]].replace(replaceInStr, valueReplace)
-         #change template and add into JSON
+         
+         with open(JSON_FOLDER_PATH + '\\' + df[header[EMAIL]][i] + '.json', 'w', encoding='UTF8', newline='') as result:
+            result.write(json.dumps(templateObjectEmail))
+            
       else:
          templateRow[TITLE] = df[header[TITLE]][i]
          templateRow[FIRST_NAME] = df[header[FIRST_NAME]][i]
