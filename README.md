@@ -2,6 +2,7 @@
 ## _Build and run code_
 
 You can run code by setup the env for python or run it into docker.
+You can use generate_data.py file to generate data. Just change the file path and num of records you want to generate file csv.
 Note: When running code, it always check the input file is exists. Make sure the files is exists to avoid errors.
 
 ## Step
