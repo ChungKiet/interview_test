@@ -49,5 +49,5 @@ class generateData():
 
       return   
 
-generateDataObject = generateData(DATA_FILE_PATH, 10)
+generateDataObject = generateData(DATA_FILE_PATH, NUM_OF_PEOPLE) # data.csv, 10
 generateDataObject.run()

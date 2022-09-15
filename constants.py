@@ -29,3 +29,4 @@ VALUE='value'
 
 CSV_PATH='data.csv'
 JSON_FOLDER_PATH='json_folder' # JSON folder for the result
+NUM_OF_PEOPLE=10
