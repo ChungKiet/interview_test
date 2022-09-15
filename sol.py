@@ -5,7 +5,7 @@ import calendar
 from constants import *
 import datetime
 
-def sol(path):
+def sol(templateJSONPath, customerFilePath, folderOutputPath, errorFilePath):
    # read the template replace
    emailJSONFile = open(TEMPLATE_REPLACE_PATH)
    templateEmail = json.load(emailJSONFile)
@@ -44,12 +44,12 @@ def sol(path):
       arrOfSpecReplaceInStr.append(keyValueObject[PREFIX] + keyValueObject[VALUE] + keyValueObject[POSTFIX])
 
    # Read data from CSV file
-   df = pd.read_csv('data.csv')
+   df = pd.read_csv(customerFilePath)
 
    header = [h for h in df]
    numOfRecord = len(df[header[TITLE]])
 
-   templateJSONFile = open(TEMPLATE_JSON_PATH)
+   templateJSONFile = open(templateJSONPath)
    templateObjectEmail = json.load(templateJSONFile)
    templateRow=[""]*NUM_OF_COL # use for errors file
    dataErrors = []
@@ -81,7 +81,7 @@ def sol(path):
             templateObjectEmail[arrOfSpecReplaceProperties[j]] = \
                templateObjectEmail[arrOfSpecReplaceProperties[j]].replace(replaceInStr, todayStr)
          
-         with open(JSON_FOLDER_PATH + '\\' + df[header[EMAIL]][i] + '.json', 'w', encoding='UTF8', newline='') as result:
+         with open(folderOutputPath  + df[header[EMAIL]][i] + '.json', 'w', encoding='UTF8', newline='') as result:
             result.write(json.dumps(templateObjectEmail))
 
       else:
@@ -93,7 +93,7 @@ def sol(path):
          dataErrors.append(templateRow)
          templateRow=[""]*NUM_OF_COL
 
-   with open(FILE_ERROR_PATH, 'w', encoding='UTF8', newline='') as errorFile:
+   with open(errorFilePath, 'w', encoding='UTF8', newline='') as errorFile:
       writer = csv.writer(errorFile)
 
       # write the header
@@ -102,7 +102,7 @@ def sol(path):
       # write multiple rows
       writer.writerows(dataErrors)
 
-sol(CSV_PATH)
+# sol(CSV_PATH)
 
 # NOTE:
 """
