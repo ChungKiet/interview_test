@@ -22,7 +22,7 @@ class TestStringMethods(unittest.TestCase):
 
       # Run test
       sendEmailObject = sendEmail('./template.json', \
-         './unit_test_file/unit_test.csv', './unit_test_file/', './unit_test_file/unit_test_errors.csv')
+         './unit_test_file/unit_test.csv', './unit_test_file/', './unit_test_file/unit_test_error.csv')
       sendEmailObject.send()
 
       # Compare the result
@@ -40,11 +40,11 @@ class TestStringMethods(unittest.TestCase):
 
       # Run test
       sendEmailObject = sendEmail('./template.json', \
-         './unit_test_file/unit_test.csv', './unit_test_json/', './unit_test_file/unit_test_errors.csv')
+         './unit_test_file/unit_test.csv', './unit_test_json/', './unit_test_file/unit_test_error.csv')
       sendEmailObject.send()
 
       # Compare the result
-      df = pd.read_csv('./unit_test_file/unit_test_errors.csv')
+      df = pd.read_csv('./unit_test_file/unit_test_error.csv')
       self.assertTrue(df[HEADER[TITLE]][0] == 'Dear You')
       self.assertTrue(df[HEADER[FIRST_NAME]][0] == 'Tester')
       self.assertTrue(df[HEADER[LAST_NAME]][0] == 'Nguyen')
