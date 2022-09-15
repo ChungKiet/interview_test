@@ -1,7 +1,7 @@
-import sys
-from sol import sol
-from pathlib import Path
 import os
+import sys
+from pathlib import Path
+from send_email_class import sendEmail
 
 def checkFormat(templateJson, customerFile, outputEmailFolder, errorFile):
    if (not Path(templateJson).exists() or not Path(customerFile).exists() or not Path(errorFile).exists()):
@@ -21,7 +21,8 @@ def main():
    errorFile = listArgs[4]
    assert checkFormat(templateJson, customerFile, outputEmailFolder, errorFile) == True
 
-   sol(templateJson, customerFile, outputEmailFolder, errorFile)
+   sendEmailObject = sendEmail(templateJson, customerFile, outputEmailFolder, errorFile)
+   sendEmailObject.send()
 
 if __name__ == '__main__':
    main()

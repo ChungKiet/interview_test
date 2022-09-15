@@ -28,4 +28,4 @@ POSTFIX='postfix'
 VALUE='value'
 
 CSV_PATH='data.csv'
-JSON_FOLDER_PATH='jsonFolder' # JSON folder for the result
+JSON_FOLDER_PATH='json_folder' # JSON folder for the result
