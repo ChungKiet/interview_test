@@ -1,7 +1,8 @@
 # SEND EMAIL
 ## _Build and run code_
 
-You can run code by setup the env for python or run it into docker
+You can run code by setup the env for python or run it into docker.
+Note: When running code, it always check the input file is exists. Make sure the files is exists to avoid errors.
 
 ## Step
 
@@ -28,7 +29,7 @@ The step to setup and run code with docker.
 - *Step 2:* As I've mentioned above, you must copy all file need to run code into the current directory.
 - *Step 3:* Open the project and run command ```docker build -t python-send-email .``` _(There is must have the **DOT** at the end of cmd)_
 - *Step 4:* Run command ```docker run python-send-email /path/to/template.json /path/to/customters.csv /path/to/output_folder /path/to/errors.csv```
-- **_Exp:_** ```docker run python-send-email ./template.json ./data.csv ./json_folder/ ./error.csv```
+- **_Exp:_** ```docker run python-send-email python send_email.py ./template.json ./data.csv ./json_folder/ ./error.csv```
 
 
 ## License

@@ -1,9 +1,9 @@
 FROM python:3.9
 
-WORKDIR .
+WORKDIR /app
 
-COPY ./ .
+COPY ./ /app
 
 RUN pip install -r requirements.txt
 
-CMD ['python', 'send_email.py']
+RUN ls
